@@ -1,0 +1,55 @@
+name: Deploy Backend to Staging
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: backend-staging
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Deploy Backend
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: SCP backend files to server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host:     ${{ secrets.VRI_SERVER_HOST }}
+          username: ${{ secrets.VRI_SERVER_USER }}
+          key:      ${{ secrets.VRI_SSH_KEY }}
+          source:   "."
+          target:   "/opt/vrinspector/backend/"
+          rm: false
+
+      - name: Install deps & restart API service
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host:     ${{ secrets.VRI_SERVER_HOST }}
+          username: ${{ secrets.VRI_SERVER_USER }}
+          key:      ${{ secrets.VRI_SSH_KEY }}
+          script: |
+            set -e
+            source /opt/vrinspector/backend/venv/bin/activate
+            pip install -q -r /opt/vrinspector/backend/requirements.txt
+            sudo systemctl restart vrinspector-api
+            sleep 3
+            sudo systemctl is-active vrinspector-api && echo "✓ Running" || exit 1
+
+      - name: Health check — /api/health
+        run: |
+          sleep 5
+          HTTP=$(curl -s -o /dev/null -w "%{http_code}" https://staging.vrinspector.com/api/health)
+          if [ "$HTTP" != "200" ]; then echo "FAILED — HTTP $HTTP"; exit 1; fi
+          echo "✅ /api/health → HTTP $HTTP"
+
+      - name: Notify on failure
+        if: failure()
+        run: echo "::error::Backend deploy failed."
