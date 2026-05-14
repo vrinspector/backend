@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: General Discussion
+    url: https://github.com/vrinspector/backend/discussions
+    about: Questions and open-ended discussion go here, not issues.
