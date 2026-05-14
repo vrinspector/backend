@@ -1,0 +1,56 @@
+name: 🐛 Bug
+description: Defect — actual ≠ expected behavior.
+title: "[BUG] "
+labels: ["type:bug", "status:needs-triage", "source:agent", "priority:p2"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary (one sentence — symbol/endpoint + what's wrong)
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Numbered, exact commands or HTTP calls.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual (with evidence — log output, SoT readback, response body)
+    validations:
+      required: true
+
+  - type: input
+    id: location
+    attributes:
+      label: file:line / commit SHA / endpoint URL
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope / blast radius (which routers/modules affected)
+
+  - type: textarea
+    id: workaround
+    attributes:
+      label: Workaround (if any)
+
+  - type: input
+    id: agent
+    attributes:
+      label: Filing agent
+      placeholder: "claude / human"
