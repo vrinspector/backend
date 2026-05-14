@@ -1,0 +1,60 @@
+name: 🔥 Security
+description: Vulnerability or weakness — always p0 or p1.
+title: "[SEC] "
+labels: ["type:security", "priority:p1", "status:needs-triage", "source:agent"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        > **Note:** This repo is private — issue content is restricted to collaborators.  
+        > For active leaked credentials (tokens, AWS keys), use **GitHub Security Advisories** instead of this template.
+
+  - type: textarea
+    id: finding
+    attributes:
+      label: Finding (describe the weakness — do NOT paste active credentials here)
+    validations:
+      required: true
+
+  - type: input
+    id: cwe
+    attributes:
+      label: CWE / OWASP reference (if known)
+      placeholder: "e.g. CWE-798 Hard-coded Credentials / OWASP A07:2021"
+
+  - type: textarea
+    id: location
+    attributes:
+      label: Location (file:line, endpoint, config key)
+    validations:
+      required: true
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: Impact if exploited
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduce / observe (safe description only)
+
+  - type: textarea
+    id: fix
+    attributes:
+      label: Suggested fix
+
+  - type: checkboxes
+    id: credential_class
+    attributes:
+      label: Credential-class finding?
+      options:
+        - label: "Yes — I will use GitHub Security Advisories instead of this issue for the full exploit details."
+
+  - type: input
+    id: agent
+    attributes:
+      label: Filing agent
+      placeholder: "claude / human"
