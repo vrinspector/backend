@@ -1,0 +1,42 @@
+name: 🕳️ Tech debt
+description: Intentional shortcut or known improvement — works, should be better.
+title: "[DEBT] "
+labels: ["type:tech-debt", "status:needs-triage", "source:agent", "priority:p2"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What is the debt
+    validations:
+      required: true
+
+  - type: textarea
+    id: where
+    attributes:
+      label: Where (files / modules)
+    validations:
+      required: true
+
+  - type: textarea
+    id: why_bad
+    attributes:
+      label: Why it slows future work (interest rate)
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Suggested refactor
+
+  - type: input
+    id: effort
+    attributes:
+      label: Effort estimate
+      placeholder: "small <2h / medium 1–3d / large 1w+"
+
+  - type: input
+    id: agent
+    attributes:
+      label: Filing agent
+      placeholder: "claude / human"
