@@ -1,0 +1,49 @@
+name: 🧪 Test gap
+description: Missing test coverage on a function, endpoint, or module.
+title: "[TEST] "
+labels: ["type:test-gap", "status:needs-triage", "source:agent", "priority:p2"]
+body:
+  - type: input
+    id: target
+    attributes:
+      label: Function / endpoint / module missing coverage
+      placeholder: "e.g. POST /api/photos — S3 upload failure path"
+    validations:
+      required: true
+
+  - type: input
+    id: file_location
+    attributes:
+      label: file:line of the untested code
+      placeholder: "e.g. app/routers/photos.py:42"
+    validations:
+      required: true
+
+  - type: textarea
+    id: gap
+    attributes:
+      label: What's uncovered (describe the behavior/branch not tested)
+    validations:
+      required: true
+
+  - type: textarea
+    id: cases
+    attributes:
+      label: Test cases that should exist
+      description: "List: happy path / boundary / error / auth / concurrent / FSV cases"
+      placeholder: |
+        - Happy: valid JPEG uploads successfully, returns S3 URL
+        - Error: >10MB file returns 413
+        - Auth: missing JWT returns 403
+        - FSV: S3 readback confirms key exists after upload
+
+  - type: textarea
+    id: risk
+    attributes:
+      label: Risk if left uncovered
+
+  - type: input
+    id: agent
+    attributes:
+      label: Filing agent
+      placeholder: "claude / human"
